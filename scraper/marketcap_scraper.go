@@ -1,15 +1,14 @@
-package main
+package scraper
 
 import (
 	"fmt"
 	"log"
 
-	"github.com/DmitriyVTitov/size"
 	"github.com/gocolly/colly/v2"
 )
 
 type Marketcap_Scraper struct {
-	url string
+	Url string
 }
 
 type Currency struct {
@@ -47,8 +46,8 @@ func (scraper Marketcap_Scraper) Scrape() error {
 		log.Fatal("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
 	})
 
-	c.Visit(scraper.url)
+	c.Visit(scraper.Url)
 
-	fmt.Printf("size of the data is %d", size.Of(names))
+	fmt.Printf("size of the data is %d", len(names))
 	return nil
 }
