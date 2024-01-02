@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"real-time-aggregator/scraper"
 
 	"time"
 
@@ -16,8 +15,11 @@ import (
 )
 
 func main() {
+	ConnectToRedis()
 	worker()
 	send()
+	// Marketcap_Scraper{Url: "https://coinmarketcap.com/all/views/all/"}.Scrape()
+
 }
 
 func startServer() (*machinery.Server, error) {
@@ -46,7 +48,7 @@ func startServer() (*machinery.Server, error) {
 
 	// Register tasks
 	tasks := map[string]interface{}{
-		"scrape_market_cap": scraper.Marketcap_Scraper{Url: "https://coinmarketcap.com/all/views/all/"}.Scrape,
+		"scrape_market_cap": Marketcap_Scraper{Url: "https://coinmarketcap.com/all/views/all/"}.Scrape,
 	}
 
 	return server, server.RegisterTasks(tasks)
