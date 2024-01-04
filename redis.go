@@ -39,12 +39,22 @@ func StoreCurrency(client *redis.Client, newCurrency Currency) error {
 
 }
 
-// func GetCurrency(client *redis.Client, name string) (Currency, error) {
-// 	var curr Currency
-// 	ctx := context.Background()
-// 	if err := client.HGetAll(ctx, name).Result(&curr); err != nil {
-// 		return curr, err
-// 	}
+func GetCurrency(client *redis.Client, name string) (Currency, error) {
+	var curr Currency
+	ctx := context.Background()
+	res, err := client.Get(ctx, name).Result()
 
-// 	return curr, nil
-// }
+	if err != nil {
+		fmt.Println("error in retrieving currency from redis")
+		return curr, err
+	}
+
+	err = json.Unmarshal([]byte(res), &curr)
+
+	if err != nil {
+		fmt.Println("error in unmarshalling currency")
+		return curr, err
+	}
+
+	return curr, nil
+}

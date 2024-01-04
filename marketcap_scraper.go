@@ -30,11 +30,13 @@ func (scraper Marketcap_Scraper) Scrape() error {
 			fmt.Printf("error in storing currency %s : %s", new_currency.Name, err)
 		}
 		fmt.Println("moving to next currecny")
-		// var curr Currency
-		// curr, err = GetCurrency(RedisClient, new_currency.Name)
-		// if err != nil {
-		// 	fmt.Printf("error in retreiving currency %s : %s", new_currency.Name, err)
-		// }
+		var curr Currency
+		curr, err = GetCurrency(RedisClient, new_currency.Name)
+		if err != nil {
+			fmt.Printf("error in get currency function: currency %s : error %s", new_currency.Name, err)
+		}
+
+		fmt.Println("retreived successfully ", curr)
 
 	})
 

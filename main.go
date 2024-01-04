@@ -107,18 +107,18 @@ func send() error {
 
 	group, err := tasks.NewGroup(&scrapeMarketCap)
 	if err != nil {
-		return fmt.Errorf("Error creating group: %s", err.Error())
+		return fmt.Errorf("error creating group: %s", err.Error())
 	}
 
 	asyncResults, err := server.SendGroupWithContext(ctx, group, 10)
 	if err != nil {
-		return fmt.Errorf("Could not send group: %s", err.Error())
+		return fmt.Errorf("could not send group: %s", err.Error())
 	}
 
 	for _, asyncResult := range asyncResults {
 		results, err := asyncResult.Get(time.Duration(time.Millisecond * 5))
 		if err != nil {
-			return fmt.Errorf("Getting task result failed with error: %s", err.Error())
+			return fmt.Errorf("getting task result failed with error: %s", err.Error())
 		}
 
 		log.INFO.Printf(
